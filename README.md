@@ -1,42 +1,8 @@
-# Integrating AI ChatBot with Blazor Web App Using .NET 9 AzureOpenAI or OpenAI GPT-4o Model
+# Integrating AI ChatBot with Blazor Web App Using .NET 9 AWS_Bedrock Anthropic Claude-3 Model
 
-## 1. (OPTION 1) Get API Key and Service EndPoint from AzureOpenAI web page
+## 1. (OPTION 1)
 
-Deploy an **Azure OpenAI** Service
 
-![image](https://github.com/user-attachments/assets/61f68a4b-2d81-42a9-b754-83e3d11e49ac)
-
-We press the **Model Deployments** menu option and then press the **Manage Deployments** button 
-
-![image](https://github.com/user-attachments/assets/3e8afe38-5e80-46f7-b078-e2a4737da771)
-
-Then we Create a **GTP-4o** deployment in Azure OpenAI Studio
-
-![image](https://github.com/user-attachments/assets/fd2a9b52-2ebe-4c5e-99aa-57a40cb0a563)
-
-## 1. (OPTION 2) Get API Key from OpenAI web page
-
-We navigate to **OpenAI** web page and **Login**
-
-![image](https://github.com/user-attachments/assets/fffa655c-b4c5-4664-b0a1-531844ba5e86)
-
-Then we request a new **OpenAI API Key**
-
-We click in **Settings** and then in **API Keys**
-
-![image](https://github.com/user-attachments/assets/68507c4b-430f-4c8d-a7fe-0670756dc7ee)
-
-Then we press on the **+ Create new secret key** button
-
-![image](https://github.com/user-attachments/assets/ec2eb833-2d35-4818-b5f5-c76468109f3b)
-
-We enter the API Key name and press **Create secret key** button
-
-![image](https://github.com/user-attachments/assets/c14aec6c-4f1a-4f11-a3e1-24b14956eef3)
-
-We copy the **API Key** value for using in our C# application
-
-![image](https://github.com/user-attachments/assets/0fc7fa17-1c21-4048-b61e-f0465e019e1d)
 
 ## 2. Create a Blazor Web App (.NET 9)
 
@@ -50,7 +16,7 @@ We select the Blazor Web App project template
 
 We input the **project name and location** and we press the Next button
 
-![image](https://github.com/user-attachments/assets/abda3cf7-abe9-40f4-a6bb-2f50886ea674)
+
 
 We select the **.NET 9** framework and leave the other options with the default values, and we press the Create button
 
@@ -62,51 +28,9 @@ We verify the project folders and files structure
 
 ## 3. Load the Nuget Packages
 
-### 3.1. (OPTION 1) Load Nuget Packages for AzureOpenAI Service
+### 3.1. Load Nuget Packages for AWS_Bedrock Service
 
-![image](https://github.com/user-attachments/assets/e7719162-e18e-4d75-98a6-7c5138f98bab)
 
-**Azure.AI.OpenAI**: This library is part of the **Azure SDK**, specifically designed to interact with the **OpenAI models hosted on Azure**
-
-It allows developers to leverage OpenAI's advanced **natural language models** (like **GPT**) for generating, understanding, and analyzing text
-
-Common use cases include generating conversational responses, completing text, summarizing content, and more, directly integrated into Azure's cloud infrastructure
-
-**Azure.Identity**: This library provides a unified way to handle **authentication** in Azure services
-
-It includes various credential classes (e.g., **DefaultAzureCredential**, **ClientSecretCredential**) to authenticate applications to Azure services securely
-
-It simplifies the process of accessing Azure resources by abstracting away the complexity of **handling tokens and secrets**
-
-It supports **Azure Active Directory (Azure AD)** authentication and also integrates with **Managed Identity** for Azure services
-
-**Microsoft.Extensions.AI**: This is a part of Microsoft's dependency injection and configuration system extensions
-
-It likely includes integrations for incorporating AI capabilities (like accessing AI models) into .NET applications using standard extension patterns
-
-Its purpose is to make integrating AI tools easier in modern .NET applications
-
-**Microsoft.Extensions.AI.OpenAI**: This library builds upon Microsoft.Extensions.AI by specifically providing support for **OpenAI models**
-
-It is intended for developers using Microsoft's extensions framework to seamlessly **include OpenAI capabilities in their .NET applications**
-
-It ensures smooth integration of OpenAI's language models with dependency injection, configuration, and scalability features
-
-**System.ComponentModel.Annotations**: This library is part of the **.NET Framework** and provides a way to define and enforce **metadata** for classes and properties using **attributes**
-
-It is commonly used for: 
-
-**Validation**: Apply attributes like [Required], [StringLength], and [Range] to **validate user input or object properties**
-
-**Data Annotations**: Add metadata for describing and controlling **how data is displayed**, e.g., [Display(Name = "Username")].
-
-**Model Binding**: Used in frameworks like ASP.NET Core to support **automatic model validation and binding**
-
-This library is a cornerstone of model validation in .NET applications, especially in web development
-
-### 3.2. (OPTION 2) Load Nuget Packages for OpenAI Service
-
-![image](https://github.com/user-attachments/assets/b9f6b439-67f6-4a97-bcb6-efc0fe4ed34f)
 
 ## 4. Modify the middleware(Program.cs)
 
@@ -120,54 +44,33 @@ builder.Services.AddSingleton<ILogger>(static serviceProvider =>
 });
 ```
 
-**(OPTION 1)** We register the **Chat Client Service** for **Azure OpenAI**
+We register the **Chat Client Service** for **AWS_Bedrock**
 
 ```csharp
-builder.Services.AddSingleton<IChatClient>(static serviceProvider =>
+builder.Services.AddSingleton<AmazonBedrockRuntimeClient>(static serviceProvider =>
 {
-    var endpoint = new Uri("https://myopenaiserviceluis.openai.azure.com/");
-    var credentials = new AzureKeyCredential("");
-    var deploymentName = "gpt-4o";
 
-    IChatClient client = new AzureOpenAIClient(endpoint, credentials).AsChatClient(deploymentName);
+var credentials = new BasicAWSCredentials("Access_Key", "Secret_access_Key");
+var config = new AmazonBedrockRuntimeConfig { RegionEndpoint = RegionEndpoint.USEast1 };
+var client = new AmazonBedrockRuntimeClient(credentials, config);
 
-    IChatClient chatClient = new ChatClientBuilder()
-        .UseFunctionInvocation()
-        .Use(client);
-
-    return chatClient;
+    return client;
 });
 ```
 
-**IMPORTANT NOTE**: copy the **OpenAI API Key** form Section 1 and paste it in this code line
+**IMPORTANT NOTE**: copy the ** Key** form Section 1 and paste it in this code line
 
 ```csharp
-var credentials = new AzureKeyCredential("API_Key_from_Section_1");
-```
-
-**(OPTION 2)** We register the **Chat Client Service** for **OpenAI**
-
-```csharp
-builder.Services.AddSingleton<IChatClient>(static serviceProvider =>
-{
-    IChatClient client = new OpenAIClient("API_Key_from_Section_1").AsChatClient("gpt-4o");
-
-    IChatClient chatClient = new ChatClientBuilder()
-        .UseFunctionInvocation()
-        .Use(client);
-
-    return chatClient;
-});
+var credentials = new BasicAWSCredentials("Access_Key", "Secret_access_Key");
 ```
 
 We also have to register the **Chat Messages Service**
 
 ```csharp
-builder.Services.AddSingleton<List<ChatMessage>>(static serviceProvider =>
+builder.Services.AddSingleton<List<Message>>(static serviceProvider =>
 {
-    return new List<ChatMessage>()
+    return new List<Message>()
     {
-        new ChatMessage(ChatRole.System, "You are a useful assistant that replies using short and precise sentences.")
     };
 });
 ```
@@ -175,17 +78,16 @@ builder.Services.AddSingleton<List<ChatMessage>>(static serviceProvider =>
 We verify the whole **Program.cs** file
 
 ```csharp
-using Azure;
-using Azure.AI.OpenAI;
-using Azure.Identity;
+using Amazon.BedrockRuntime;
+using Amazon.Runtime;
+using Amazon;
+using BlazorAIChatBot_with_AWS_Bedrock.Components;
 using BlazorAIChatBotOpenAI.Components;
-using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
-using OpenAI;
-using OpenAI.Chat;
 using System.ComponentModel;
+using Amazon.BedrockRuntime.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -199,28 +101,22 @@ builder.Services.AddSingleton<ILogger>(static serviceProvider =>
     return lf.CreateLogger(typeof(Program));
 });
 
-// Register the chat client for Azure OpenAI
-builder.Services.AddSingleton<IChatClient>(static serviceProvider =>
+// Register the chat client for AWS-Bedrock
+builder.Services.AddSingleton<AmazonBedrockRuntimeClient>(static serviceProvider =>
 {
-    var endpoint = new Uri("https://myopenaiserviceluis.openai.azure.com/");
-    var credentials = new AzureKeyCredential("");
-    var deploymentName = "gpt-4o";
 
-    IChatClient client = new AzureOpenAIClient(endpoint, credentials).AsChatClient(deploymentName);
+var credentials = new BasicAWSCredentials("", "");
+var config = new AmazonBedrockRuntimeConfig { RegionEndpoint = RegionEndpoint.USEast1 };
+var client = new AmazonBedrockRuntimeClient(credentials, config);
 
-    IChatClient chatClient = new ChatClientBuilder()
-        .UseFunctionInvocation()
-        .Use(client);
-
-    return chatClient;
+    return client;
 });
 
 // Register default chat messages
-builder.Services.AddSingleton<List<Microsoft.Extensions.AI.ChatMessage>>(static serviceProvider =>
+builder.Services.AddSingleton<List<Message>>(static serviceProvider =>
 {
-    return new List<Microsoft.Extensions.AI.ChatMessage>()
+    return new List<Message>()
     {
-        new Microsoft.Extensions.AI.ChatMessage(ChatRole.System, "You are a useful assistant that replies using short and precise sentences.")
     };
 });
 
@@ -250,18 +146,13 @@ We create a new folder **Chatbot** inside the **Components** folder
 
 Then we are going to create the classes files and razor components
 
-We first create the **ChatState.cs**. This file can be summarized in two lines:
+We first create the **ChatState.cs**
+
+We input the code in the **ChatState.cs** file:
 
 ```csharp
-ChatMessages.Add(new ChatMessage(ChatRole.User, userText));
-...
-ChatMessages.Add(new ChatMessage(ChatRole.Assistant, $"My apologies, but I encountered an unexpected error.\n\n<p style=\"color: red\">{e}</p>"));
-```
-
-This is the whole **ChatState.cs** file:
-
-```csharp
-using Microsoft.Extensions.AI;
+using Amazon.BedrockRuntime;
+using Amazon.BedrockRuntime.Model;
 using System.Security.Claims;
 using System.Text;
 
@@ -270,32 +161,62 @@ namespace BlazorAIChatBotOpenAI.Components.Chatbot;
 public class ChatState
 {
     private readonly ILogger _logger;
-    private readonly IChatClient _chatClient;
-    private List<ChatMessage> _chatMessages;
+    private readonly AmazonBedrockRuntimeClient? _chatClient;
+    private List<Message>? _chatMessages;
+    private ConverseRequest _request;
 
-    public List<ChatMessage> ChatMessages { get => _chatMessages; set => _chatMessages = value; }
+    public List<Message>? ChatMessages { get => _chatMessages; set => _chatMessages = value; }
 
-    public ChatState(ClaimsPrincipal user, IChatClient chatClient, List<ChatMessage> chatMessages, ILogger logger)
+    public ChatState(ClaimsPrincipal user, AmazonBedrockRuntimeClient chatClient, List<Message>? chatMessages, ILogger logger)
     {
         _logger = logger;
         _chatClient = chatClient;
         ChatMessages = chatMessages;
+
+        // Initialize the ConverseRequest here
+        _request = new ConverseRequest
+        {
+            ModelId = "anthropic.claude-3-haiku-20240307-v1:0",
+            Messages = ChatMessages,
+            InferenceConfig = new InferenceConfiguration()
+            {
+                MaxTokens = 512,
+                Temperature = 0.5F,
+                TopP = 0.9F
+            }
+        };
     }
 
     public async Task AddUserMessageAsync(string userText, Action onMessageAdded)
     {
-        ChatMessages.Add(new ChatMessage(ChatRole.User, userText));
+        ChatMessages.Add(
+            new Message
+            {
+                Role = ConversationRole.User,
+                Content = new List<ContentBlock> { new ContentBlock { Text = userText } }
+            }
+        );
         onMessageAdded();
 
         try
         {
             _logger.LogInformation("Sending message to chat client.");
-            _logger.LogInformation($"user Text: {userText}");
+            _logger.LogInformation($"User Text: {userText}");
 
-            var result = await _chatClient.CompleteAsync(ChatMessages);
-            ChatMessages.Add(new ChatMessage(ChatRole.Assistant, result.Message.Text));
-            
-            _logger.LogInformation($"Assistant Response: {result.Message.Text}");
+            // Update the Messages property of the request object before sending
+            _request.Messages = ChatMessages;
+
+            var result = await _chatClient.ConverseAsync(_request);
+
+            ChatMessages.Add(
+                new Message
+                {
+                    Role = ConversationRole.Assistant,
+                    Content = new List<ContentBlock> { new ContentBlock { Text = result?.Output?.Message?.Content?[0]?.Text } }
+                }
+            );
+
+            _logger.LogInformation($"Assistant Response: {result?.Output?.Message?.Content?[0]?.Text}");
         }
         catch (Exception e)
         {
@@ -304,8 +225,13 @@ public class ChatState
                 _logger.LogError(e, "Error getting chat completions.");
             }
 
-            // format the exception using HTML to show the exception details in a chat panel as response
-            ChatMessages.Add(new ChatMessage(ChatRole.Assistant, $"My apologies, but I encountered an unexpected error.\n\n<p style=\"color: red\">{e}</p>"));
+            ChatMessages.Add(
+                new Message
+                {
+                    Role = ConversationRole.Assistant,
+                    Content = new List<ContentBlock> { new ContentBlock { Text = $"My apologies, but I encountered an unexpected error.\n\n<p style=\"color: red\">{e}</p>" } }
+                }
+            );
         }
         onMessageAdded();
     }
@@ -385,10 +311,10 @@ And also we create the Chatbot razor component
 
 ```razor
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
+@using Amazon.BedrockRuntime
+@using Amazon.BedrockRuntime.Model
 @using Microsoft.AspNetCore.Components.Authorization
-@using BlazorAIChatBot_with_AzureOpenAI.Components.Chatbot
-@using Microsoft.Extensions.AI
-@using OpenAI.Chat
+@using BlazorAIChatBotOpenAI.Components.Chatbot
 @using System.ComponentModel
 
 @inject IJSRuntime JS
@@ -405,11 +331,11 @@ And also we create the Chatbot razor component
     <div class="chatbot-chat" @ref="chat">
         @if (chatState is not null)
         {
-            foreach (var message in chatState.ChatMessages.Where(m => m.Role == ChatRole.Assistant || m.Role == ChatRole.User))
+            foreach (var message in chatState.ChatMessages.Where(m => m.Role == ConversationRole.Assistant || m.Role == ConversationRole.User))
             {
-                if (!string.IsNullOrEmpty(message.Contents[0].ToString()))
+            if (!string.IsNullOrEmpty(message.Content[0].Text.ToString()))
                 {
-                    <p @key="@message" class="message message-@message.Role">@MessageProcessor.AllowImages(message.Contents[0].ToString()!)</p>                    
+                    <p @key="@message" class="message message-@message.Role">@MessageProcessor.AllowImages(message.Content[0].Text.ToString()!)</p>                    
                 }
             }
         }
@@ -420,7 +346,7 @@ And also we create the Chatbot razor component
 
         @if (thinking)
         {
-            <p class="thinking">"[phi3:latest]" is Thinking...</p>
+            <p class="thinking">"[claude3]" is Thinking...</p>
         }
 
     </div>
@@ -439,12 +365,11 @@ And also we create the Chatbot razor component
     string? messageToSend;
     bool thinking;
     IJSObjectReference? jsModule;
-    ChatTool getAgeTool; // Tool definition for GetAge
 
     protected override async Task OnInitializedAsync()
     {
-        IChatClient? chatClient = ServiceProvider.GetService<IChatClient>();
-        List<Microsoft.Extensions.AI.ChatMessage>? chatMessages = ServiceProvider.GetService<List<Microsoft.Extensions.AI.ChatMessage>>();
+        AmazonBedrockRuntimeClient? chatClient = ServiceProvider.GetService<AmazonBedrockRuntimeClient>();
+        List<Message>? chatMessages = ServiceProvider.GetService<List<Message>>();
         if (chatClient is not null)
         {
             AuthenticationState auth = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -464,17 +389,8 @@ And also we create the Chatbot razor component
         if (chatState is not null && !string.IsNullOrEmpty(messageCopy))
         {
             thinking = true;
-
-            ChatOptions chatOptions = new()
-            {
-               Tools = 
-               [
-                   AIFunctionFactory.Create(GetAge), 
-                   AIFunctionFactory.Create(GetWeather)
-                   ]
-            };
             
-            await chatState.AddUserMessageAsync(messageCopy, chatOptions, onMessageAdded: StateHasChanged);
+            await chatState.AddUserMessageAsync(messageCopy, onMessageAdded: StateHasChanged);
             
             thinking = false;
         }
@@ -491,16 +407,6 @@ And also we create the Chatbot razor component
             await jsModule.InvokeVoidAsync("submitOnEnter", textbox);
         }
     }
-
-    // GetAge function definition
-    [Description("Provides Luis Coco age")]
-    static string GetAge()
-    {
-        return "Luis Coco is 50 years old";
-    }
-
-    [Description("Gets the weather")]
-    static string GetWeather() => Random.Shared.NextDouble() > 0.5 ? "It's sunny" : "It's raining";
 }
 ```
 
