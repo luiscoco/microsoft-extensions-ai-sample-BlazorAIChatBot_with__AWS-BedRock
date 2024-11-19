@@ -30,7 +30,7 @@ We request the **Model access**
 
 We right click on the user name and select the menu option **Security credentials**
 
-![image](https://github.com/user-attachments/assets/0ce586db-9580-4f9d-a295-af9192702aa0)
+![image](https://github.com/user-attachments/assets/1b631586-c546-40e0-b36d-b2954769d6f2)
 
 We scroll down and in **Access keys** we press the **Create access key** button
 
