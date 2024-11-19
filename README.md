@@ -224,6 +224,12 @@ Then we are going to create the classes files and razor components
 
 We first create the **ChatState.cs**
 
+**IMPORTANT NOTE**: in this file we set the AI Model to be used by AWS_Bedrock
+
+```
+ModelId = "anthropic.claude-3-haiku-20240307-v1:0",
+```
+
 We input the code in the **ChatState.cs** file:
 
 ```csharp
