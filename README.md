@@ -434,11 +434,12 @@ Welcome to your new app.
 
 ## 8. Run the application a see the results
 
-![image](https://github.com/user-attachments/assets/ca75a221-32ae-46b7-a223-ff3a22a0cf1d)
+![image](https://github.com/user-attachments/assets/ee68ce98-8a9a-4757-be5c-6583dac8b979)
 
-![image](https://github.com/user-attachments/assets/e530c46e-933b-474c-b41a-89df511030b5)
+![image](https://github.com/user-attachments/assets/a36c02dd-f7ce-4a31-9b1a-7810a90de99e)
 
 We write the message and press the Send button
 
-![image](https://github.com/user-attachments/assets/db4f7c2a-eac2-450a-a761-d650854dd507)
+![image](https://github.com/user-attachments/assets/015bbb4f-35c4-4342-a987-f785778ea28d)
 
+![image](https://github.com/user-attachments/assets/23dd2ef5-9d22-4243-9442-e7b710454a24)
