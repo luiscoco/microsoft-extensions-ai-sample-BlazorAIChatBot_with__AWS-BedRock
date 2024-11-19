@@ -4,17 +4,28 @@
 
 ### 1.1. What is AWS_Bedrock?
 
-**Amazon Bedrock** is a fully managed service (is serverless) that offers a choice of high-performing **Foundation Models (FMs)** from leading AI companies like AI21 Labs, Anthropic(Claude), Cohere, Meta(Llama 2), Mistral AI, Stability AI, and Amazon(Titan) through a single API
+**Amazon Bedrock** is a fully managed service (is serverless) that offers a choice of high-performing **Foundation Models (FMs)** from leading AI companies like **AI21** Labs, **Anthropic(Claude)**, **Cohere**, **Meta(Llama 2)**, **Mistral AI**, **Stability AI**, and **Amazon(Titan)** through a single API
 
 Build Generative AI Applications with your data. Using Amazon Bedrock, you can privately customize top FMs with your data using techniques such as Fine-Tuning and Retrieval Augmented Generation (RAG), and build Agents that execute tasks using your enterprise systems and data sources
 
 Agents for Amazon Bedrock plan and execute multistep tasks using company systems and data source 
 
-![image](https://github.com/user-attachments/assets/1601024a-e4a1-454f-9977-9334eeb0d128)
+### 1.2. How to create AWS_Service with your AWS Console
 
+We first **login** in **AWS Console**
 
+We **search** for **AWS_Bedrock** Service
 
-### 1.2. 
+![image](https://github.com/user-attachments/assets/a3ca4a00-0964-456f-9135-3e602bc25b95)
+
+We navigate to AWS_Bedrock
+
+![image](https://github.com/user-attachments/assets/3aa95973-4f38-4389-a08b-0e69f6195687)
+
+We request the **Model access**
+
+![image](https://github.com/user-attachments/assets/9640006c-4a9f-4229-a797-eddd3962cc97)
+
 
 
 ## 2. We get Access_Key and Secret_access_Key in AWS Console
