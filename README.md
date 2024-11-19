@@ -68,11 +68,45 @@ We select the **.NET 9** framework and leave the other options with the default 
 
 We verify the project folders and files structure
 
-![image](https://github.com/user-attachments/assets/8a18644b-abff-4181-9272-b0e27f0e154d)
+![image](https://github.com/user-attachments/assets/e03bdbde-1b90-47f2-8784-ad234993eacb)
+
+Note: The Chatbot folder will be created in the following sections in this document
 
 ## 4. Load the Nuget Packages for AWS_Bedrock Service
 
+![image](https://github.com/user-attachments/assets/7d2c85e2-25d2-419e-8a38-1134fce5e163)
 
+**AWSSDK.Core**: it is a foundational library for the AWS SDK for .NET. It provides core functionalities and utilities that support other AWS service-specific SDK libraries
+
+Essentially, it acts as the backbone for AWS SDK operations in .NET applications
+
+**Key Features**
+
+**Request and Response Handling**: Includes functionality to send HTTP requests and handle responses from AWS services
+
+**Authentication and Authorization**: Supports AWS Signature Version 4 signing for requests to authenticate and authorize API calls securely
+
+**Configuration**: Allows management of AWS credentials, region settings, and service endpoint configurations
+
+**Retries and Error Handling**: Implements automatic retry logic and handles common AWS-specific errors
+
+**Logging and Diagnostics**: Provides logging mechanisms for debugging and monitoring SDK operations
+
+**Thread-Safe and Async Support**: Offers thread-safe operations and asynchronous programming support for modern .NET applications
+
+**Service Model Abstractions**: Includes serialization, deserialization, and request marshalling/unmarshalling needed by service-specific SDKs
+
+**AWSSDK.BedrockRuntime**: it is part of the AWS SDK for .NET, designed to facilitate interactions with Amazon Bedrock's runtime API
+
+Amazon Bedrock is a managed service that provides access to foundation models (FMs) from leading AI companies, enabling developers to build and scale generative AI applications
+
+**Key Features**:
+
+**Model Invocation**: Allows you to invoke foundation models for tasks such as text generation, summarization, and more
+
+**Streaming Support**: Supports both streaming and non-streaming modes for model inference, providing flexibility based on application needs
+
+**Integration with AWS Services**: Seamlessly integrates with other AWS services, leveraging existing authentication and authorization mechanisms
 
 ## 5. Modify the middleware(Program.cs)
 
