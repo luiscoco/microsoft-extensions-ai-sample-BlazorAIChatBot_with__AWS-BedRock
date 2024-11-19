@@ -1,10 +1,13 @@
 # Integrating AI ChatBot with Blazor Web App Using .NET 9 AWS_Bedrock Anthropic Claude-3 Model
 
-## 1. (OPTION 1)
+## 1. How to start using AWS_Bedrock Service
+
+
+## 2. We get Access_Key and Secret_access_Key in AWS Console
 
 
 
-## 2. Create a Blazor Web App (.NET 9)
+## 3. Create a Blazor Web App (.NET 9)
 
 We run Visual Studio 2022 Community Edition and we Create a new Project
 
@@ -26,13 +29,11 @@ We verify the project folders and files structure
 
 ![image](https://github.com/user-attachments/assets/8a18644b-abff-4181-9272-b0e27f0e154d)
 
-## 3. Load the Nuget Packages
-
-### 3.1. Load Nuget Packages for AWS_Bedrock Service
+## 4. Load the Nuget Packages for AWS_Bedrock Service
 
 
 
-## 4. Modify the middleware(Program.cs)
+## 5. Modify the middleware(Program.cs)
 
 We first have to register the **Log Service**
 
@@ -138,7 +139,7 @@ app.MapRazorComponents<App>()
 app.Run();
 ```
 
-## 5. Add the Chatbot
+## 6. Add the Chatbot razor component
 
 We create a new folder **Chatbot** inside the **Components** folder
 
@@ -410,7 +411,7 @@ And also we create the Chatbot razor component
 }
 ```
 
-## 6. Modify the Home.razor component
+## 7. Modify the Home.razor component
 
 We have to invoke the Show Chatbot button from the home page, for this purpose we add the following code:
 
@@ -431,7 +432,7 @@ Welcome to your new app.
 <ShowChatbotButton />
 ```
 
-## 7. Run the application a see the results
+## 8. Run the application a see the results
 
 ![image](https://github.com/user-attachments/assets/ca75a221-32ae-46b7-a223-ff3a22a0cf1d)
 
@@ -440,23 +441,4 @@ Welcome to your new app.
 We write the message and press the Send button
 
 ![image](https://github.com/user-attachments/assets/db4f7c2a-eac2-450a-a761-d650854dd507)
-
-In this sample we also integrated with ChatGPT-4o two Functions:
-
-```csharp
-[Description("Provides Luis Coco age")]
-static string GetAge()
-{
-    return "Luis Coco is 50 years old";
-}
-
-[Description("Gets the weather")]
-static string GetWeather() => Random.Shared.NextDouble() > 0.5 ? "It's sunny" : "It's raining";
-```
-
-We can invoke them from the Chatbot prompt 
-
-![image](https://github.com/user-attachments/assets/32b5f5bb-6628-49a4-a9b4-530430c27ec9)
-
-
 
