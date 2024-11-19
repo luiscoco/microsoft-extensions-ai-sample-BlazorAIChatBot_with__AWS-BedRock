@@ -2,6 +2,24 @@
 
 ## 1. How to start using AWS_Bedrock Service
 
+We right click on the user name and select the menu option **Security credentials**
+
+![image](https://github.com/user-attachments/assets/0ce586db-9580-4f9d-a295-af9192702aa0)
+
+We scroll down and in **Access keys** we press the **Create access key** button
+
+![image](https://github.com/user-attachments/assets/4dd1dce0-c1ed-47a8-b72a-3706bbd5c9b3)
+
+We select the first use case radio button option "Command Line Interface (CLI)", select the checkbox "I understand the above recommendation and want to proceed to create an access key." and press the Next button 
+
+![image](https://github.com/user-attachments/assets/4c58cadf-b4f1-4dfe-95a6-ece9f906cf40)
+
+We provide a description tag value and press the Create Access Key button 
+
+![image](https://github.com/user-attachments/assets/2a4f61f9-2f57-4abd-a1ae-76b31d410695)
+
+
+
 ### 1.1. What is AWS_Bedrock?
 
 **Amazon Bedrock** is a fully managed service (is serverless) that offers a choice of high-performing **Foundation Models (FMs)** from leading AI companies like **AI21** Labs, **Anthropic(Claude)**, **Cohere**, **Meta(Llama 2)**, **Mistral AI**, **Stability AI**, and **Amazon(Titan)** through a single API
